@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CareConnect AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id='bar' hidden><span id='who'></span><span><button id='logbtn' type='button' hidden>Access log</button> <select id='langsel' style='width:auto'><option value='en'>English</option><option value='ar'>العربية</option><option value='ml'>മലയാളം</option></select> <button id='out' type='button'>Sign out</button></span></div>
+<main id='staff' hidden>
+<p class="eyebrow">Prototype · simulated data</p>
+<h1>CareConnect AI</h1>
+<p class="sub">From screening result to completed care. Demo date <strong id="today"></strong>. Synthetic data only. This tool tracks follow-up; it does not diagnose or advise on treatment.</p>
+<div class='tabs'><button id='tab-d' class='on' type='button'>Dashboard</button><button id='tab-a' type='button'>Appointments</button><button id='tab-m' type='button'>Metrics</button><button id='tab-i' type='button'>Impact</button><button id='tab-t' type='button'>Tasks</button><button id='tab-s' type='button'>Settings</button></div>
+<div id='metpane' hidden></div><div id='taskpane' hidden></div><div id='setpane' hidden></div><div id='imppane' hidden></div>
+<div id='dashpane'>
+<section class="stats">
+<div class="card"><span class="num" id="s-open">0</span><small>Open cases</small></div>
+<div class="card bad"><span class="num" id="s-over">0</span><small>Overdue</small></div>
+<div class="card warn"><span class="num" id="s-un">0</span><small>Unassigned</small></div>
+<div class="card bad"><span class="num" id="s-rej">0</span><small>Rejected referrals</small></div>
+<div class="card ok"><span class="num" id="s-closed">0</span><small>Closed</small></div>
+<div class="card bad"><span class="num" id="s-late">0</span><small>Late for appointment</small></div>
+</section>
+<div class="pipe" id="pipe" aria-label="Open cases by stage"></div>
+<div class="chips" id="chips"></div>
+<section class="controls">
+<input id="q" type="search" placeholder="Search case, patient, owner or stage">
+<select id="f"><option value="all">All cases</option><option value="access">Communication support needed</option><option value="taskover">Task overdue</option><option value="resp">Patient response pending</option><option value="consult">Consultation needs action</option><option value="refover">Referral overdue</option><option value="ontx">On treatment</option><option value="notx">Not taking treatment</option><option value="noshow">No-show</option><option value="inside">Inside patients</option><option value="open">Open</option><option value="overdue">Overdue</option><option value="un">Unassigned</option><option value="rej">Rejected referrals</option><option value="closed">Closed</option><option value="booked">Has appointment</option><option value="late">Late or missed appointment</option><option value="outside">Outside patients</option><option value="atrisk">At risk of dropping out</option></select>
+<span id="count"></span><button id="reset" type="button">Reset demo data</button>
+</section>
+<div class="wrap"><table><thead><tr><th>Case</th><th>Stage</th><th>Next action</th><th>Owner</th><th>Due</th><th>Status</th></tr></thead><tbody id="body"></tbody></table></div>
+<p class="note">Select a case to see its journey, assign an owner, add consultation notes and try to close it. Showing up to 100 rows, overdue first. Deadlines are prototype values, not validated clinical standards.</p></div>
+<div id='apptpane' hidden></div>
+</main>
+<section class='view' id='home'><div class='hero'><div class='mark'>+</div><h1>CareConnect AI</h1><p class='sub' style='margin:0 auto'>From screening result to completed care.</p><div class='tags'><span>Track every result</span><span>Guide every patient</span><span>Close every loop</span><span>Prototype · simulated data</span></div></div><div class='tags langs' id='langs'><button type='button' data-l='en'>English</button><button type='button' data-l='ar'>العربية</button><button type='button' data-l='ml'>മലയാളം</button></div>
+<p class='sub' style='text-align:center'>Who are you?</p>
+<button class='big' id='go-p' type='button'><strong>I am a patient</strong>See my result, my next steps and get help</button>
+<button class='big' id='go-s' type='button'><strong>I am from the hospital</strong>Track and manage patient cases</button>
+<p class='note'>Demo only. All people and results are fictional.</p></section>
+<section class='view' id='plogin' hidden><h2>Patient sign in</h2><label for='pphone'>Phone number</label><input id='pphone' inputmode='numeric' autocomplete='off'><label for='ppin'>MPIN</label><input id='ppin' type='password' inputmode='numeric' maxlength='4' autocomplete='off'><p class='err' id='perr'></p><button class='pri' id='pgo' type='button'>Sign in</button><button type='button' id='go-new'>New patient? Create account</button><button type='button' data-home>Back</button><p class='note'>Demo patient: 1234567891 with MPIN 1234 (numbers run up to 1234568090).</p></section>
+<section class='view' id='pprofile' hidden><h2>Confirm your details</h2><p class='sub'>Please check your details before we show your case. Use a fictional name: this is a demo.</p><label for='fname'>Full name</label><input id='fname'><label for='fage'>Age</label><input id='fage' inputmode='numeric'><label for='flang'>Preferred language</label><select id='flang'><option value='en'>English</option><option value='ml'>Malayalam</option><option value='ar'>Arabic</option></select><label><input type='checkbox' id='ftext' style='width:auto'> I prefer text-based communication (no voice calls)</label><label><input type='checkbox' id='finterp' style='width:auto'> I need a sign-language interpreter</label><label for='fsign'>Preferred sign language</label><select id='fsign'><option value=''>Not needed</option><option>Indian Sign Language (ISL)</option><option>American Sign Language (ASL)</option><option>British Sign Language (BSL)</option><option>Other sign language</option></select><label for='fassist'>Other communication help (optional)</label><input id='fassist' placeholder='For example: large print, written instructions'>
+<label><input type='checkbox' id='fcons' style='width:auto'> I agree to share my details with my care team.</label><p class='err' id='ferr'></p><button class='pri' id='fsave' type='button'>Continue</button></section>
+<section class='view' id='portal' hidden><p class='mut' id='trnote' hidden>Translated by AI. Please check anything important with your care team.</p><div id='pbody'></div></section>
+<section class='view' id='newacct' hidden><h2>Create your account</h2><p class='sub'>For patients with a report from another hospital. Use fictional details in this demo.</p><label for='nname'>Full name</label><input id='nname'><label for='nphone'>Phone number (10 digits)</label><input id='nphone' inputmode='numeric'><label for='nage'>Age</label><input id='nage' inputmode='numeric'><label for='npin'>Choose a 4-digit MPIN</label><input id='npin' type='password' inputmode='numeric' maxlength='4'><label for='nprob'>What is your problem or report about?</label><textarea id='nprob' rows='2'></textarea><label for='nfile'>Upload your report (optional)</label><input id='nfile' type='file' accept='image/*,.pdf'><p class='err' id='nerr'></p><button class='pri' id='nsave' type='button'>Create account</button><button type='button' data-home>Cancel</button></section>
+<section class='view' id='slogin' hidden><h2>Hospital sign in</h2><label for='sid'>Hospital ID</label><input id='sid' autocomplete='off'><label for='spin'>MPIN</label><input id='spin' type='password' inputmode='numeric' maxlength='4' autocomplete='off'><p class='err' id='serr'></p><button class='pri' id='sgo' type='button'>Sign in</button><button type='button' data-home>Back</button><p class='note'>Demo IDs: staff01 with MPIN 2468, or admin01 with MPIN 1357. Real use needs server-side sign-in, encryption and audit.</p></section>
+<dialog id='tdlg'><div id='tbody'></div></dialog>
+<dialog id='logdlg'><div id='logbody'></div></dialog>
+<dialog id="dlg"><div id="detail"></div></dialog>
+<script src="script.js"></script>
+</body>
+</html>
